@@ -1,0 +1,199 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <iostream> 
+#include <unistd.h>
+#include <windows.h>
+#include <math.h>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	const int row = 5;
+	const int column = 6;
+	unsigned seed;
+		int iarr[row][column];
+	int a,b,c,e,g,i,j,k,l,m,n,o,p,q,u,v,w;
+	int WOW[30];
+	int WAW[20];
+	int WVW[20];
+	for (g=0;g<31;g++)
+    {
+    	WOW[g]=0;
+	}
+		for (g=0;g<21;g++)
+    {
+    	WAW[g]=0;
+	}	
+		for (g=0;g<21;g++)
+    {
+    	WVW[g]=0;
+	}	
+    int num[7];
+	double r,s,t,x,y,z,d,h,f;
+	f=0;
+	r=0;
+	s=0;
+	t=0;
+	x=0;
+	y=0;
+	z=0;
+	a=0;
+	e=0;
+	h=0;
+	seed = (unsigned)time(NULL);
+	srand(seed);
+	
+	cout <<"數字1-6將會假定為不同符石，\n1=水符石,6=心符石，\n以下估算則以水魔始作計算，如果水珠量為0/1/2則不作倍率計算。\n\n另外假設如果有至少有一種珠跟水珠數量一樣，\n亦那種珠同為屬性珠(即非心珠)中最多的時候，\n則不觸發額外兼具效果，卻觸發1.4倍\n\n這程式也會進行兼屬效果時，珠量期望值運算。\n另外一個正常隨機版面不會有三粒相連，這程式同樣也會去除之。\n\n請設定每一次演算隔間時間，單位為毫秒：";
+	cin >> u;
+	cout << "請設定你想演算的次數：" ;
+	cin >> v;
+	cout << "\n\n";
+	for (l=0;l<v;l++)
+	{
+		q=1;
+		r=0;
+		c=0;
+		for (w=0;w<7;w++)
+    	{
+    		num[w]=0;
+		}
+	    for(i=0;i<row;i++)
+	    {
+		    for(j=0;j<column;j++)
+		    {
+			    k= rand()%6;			    		
+		    	iarr[i][j]=k+1;
+		    	cout << iarr[i][j];
+	        }
+	        cout << "\n";
+	    }  
+
+	    for(n=0;n<row;n++)
+	    {
+	    	for(o=0;o<column;o++)
+	    	{
+					switch(iarr[n][o])
+					{
+						case 1:
+							num[1]++;
+							break;
+						case 2:
+							num[2]++;
+							break;
+						case 3:
+							num[3]++;
+							break;
+						case 4:
+							num[4]++;
+							break;
+						case 5:
+							num[5]++;
+							break;
+						case 6:
+							num[6]++;
+							break;
+					}
+				}
+
+		}
+		
+		for(a=0;a<row;a++)
+	    {
+	    	for(b=0;b<column;b++)
+	    	{
+	    			if (a<3)
+	    			{
+						if(iarr[a][b]==iarr[a+1][b] && iarr[a+1][b]==iarr[a+2][b])
+	    				{
+	    					c++;
+						}
+					}
+					
+					if (b<4)
+					{
+						if(iarr[a][b]==iarr[a][b+1] && iarr[a][b+1]==iarr[a][b+2])
+	    				{
+	    					c++;
+						}
+					}
+			}
+		}
+	    
+	    
+ 	    for (p=2;p<6;p++)
+ 	    {
+ 	    	if (num[p]!=num[1])
+ 	    	{
+				if(max(num[1],max(num[2],max(num[3],max(num[4],num[5]))))==num[p])
+ 	    		{
+ 	    			q=p;
+				}
+			}
+			else
+			{
+				r++;
+			}
+		}
+		
+		if(max(num[1],max(num[2],max(num[3],max(num[4],num[5]))))==num[1])
+		{
+			q=1;
+		}
+		if (c==0)
+		{		
+			if (num[1]>2)
+			{
+				if (q==1)
+				{
+					s++;
+					cout << "第"<<s<<"次演算結果:\n水珠量最多，\n因此倍率可視為3.5*3.5*1.4*1.4=24.01倍，即單邊隊長為4.9倍\n\n\n";
+					t=t+4.9;
+					z++;
+					if(r==0)
+					{
+						e++;
+					}
+				}
+				else if (q!=1)
+				{
+					s++;
+					cout << "第"<<s<<"次演算結果:\n水珠+兼具屬珠量有"<<num[1]+num[q]<<"顆，\n倍率可視為3.5*3.5*((" <<num[1]<<"+"<<num[q]<<")/"<<num[1]<<")="<<3.5*3.5*(num[1]+num[q])/num[1]<<"倍，即單邊隊倍率為"<<sqrt(3.5*3.5*(num[1]+num[q])/num[1])<<"倍\n\n\n";
+					t=t+sqrt(3.5*3.5*(num[1]+num[q])/num[1]);
+					y=y+num[1]+num[q];
+					WOW[num[1]+num[q]]=WOW[num[1]+num[q]]+1;
+					WAW[num[1]]=WAW[num[1]]+1;
+					WVW[num[q]]=WVW[num[q]]+1;
+				}
+			}
+			else
+			{
+				l--;
+				cout << "水珠不足三粒，不列入計算。\n\n\n";
+				f++;
+			}
+		}
+		else
+		{
+			cout << "有3粒或以上相連，不列入計算。\n\n";
+			l--;
+			h++;
+		}
+	    Sleep(u);
+    }
+    x=t/s;
+    z=s-z;
+    d=y/z;
+    cout << "經" << s << "次演算後，發動兼屬效果的次數有"<<z<<"次\n";
+    cout << "水珠最多且唯一最多的板面出現次數有"<<e<<"次\n";
+    cout << "兼屬效果時，其水珠+兼屬珠量的期望值為" << d<<"粒\n\n" ;
+	cout << "而其單邊隊長的有效倍率期望值為" << x <<"倍\n\n";
+	cout<<"另外，水珠+兼屬珠總數的統計數據如下:\n6珠:"<<WOW[6]<<" 7珠:"<<WOW[7]<<" 8珠:"<<WOW[8]<<" 9珠:"<<WOW[9]<<" 10珠:"<<WOW[10]<<"\n11珠:"<<WOW[11]<<" 12珠:"<<WOW[12]<<" 13珠:"<<WOW[13]<<" 14珠:"<<WOW[14]<<" 15珠:"<<WOW[15]<<"\n16珠:"<<WOW[16]<<" 17珠:"<<WOW[17]<<" 18珠:"<<WOW[18]<<" 19珠:"<<WOW[19]<<" 20珠:"<<WOW[20]<<"\n21珠:"<<WOW[21]<<" 22珠:"<<WOW[22]<<" 23珠:"<<WOW[23]<<" 24珠:"<<WOW[24]<<" 25珠:"<<WOW[25]<<"\n26珠:"<<WOW[26]<<" 27珠:"<<WOW[27]<<" 28珠:"<<WOW[28]<<" 29珠:"<<WOW[29]<<" 30珠:"<<WOW[30]<<"\n\n";
+	cout<<"當中，水珠量數據如下(兼屬效果時):\n3珠:"<<WAW[3]<<" 4珠:"<<WAW[4]<<" 5珠:"<<WAW[5]<<" 6珠:"<<WAW[6]<<" 7珠:"<<WAW[7]<<" 8珠:"<<WAW[8]<<" 9珠:"<<WAW[9]<<" 10珠:"<<WAW[10]<<"\n11珠:"<<WAW[11]<<" 12珠:"<<WAW[12]<<" 13珠:"<<WAW[13]<<" 14珠:"<<WAW[14]<<" 15珠:"<<WAW[15]<<"\n\n";
+	cout<<"兼屬珠則數據如下(兼屬效果時):\n3珠:"<<WVW[3]<<" 4珠:"<<WVW[4]<<" 5珠:"<<WVW[5]<<" 6珠:"<<WVW[6]<<" 7珠:"<<WVW[7]<<" 8珠:"<<WVW[8]<<" 9珠:"<<WVW[9]<<" 10珠:"<<WVW[10]<<"\n11珠:"<<WVW[11]<<" 12珠:"<<WVW[12]<<" 13珠:"<<WVW[13]<<" 14珠:"<<WVW[14]<<" 15珠:"<<WVW[15]<<"\n\n";
+	cout<< "版面有3粒或以上相連機率=" <<h/(s+h+f)<<"\n";
+	cout<< "版面不足3粒水珠機率(去除3粒或以上相連機率)=" << f/(s+f)<< "\n\n";
+    system("pause"); 
+	return 0;
+}
