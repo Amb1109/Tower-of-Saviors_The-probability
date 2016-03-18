@@ -13,23 +13,28 @@ int main()
 	const int row = 5;
 	const int column = 6;
 	unsigned seed;
-		int iarr[row][column];
+	int iarr[row][column];
 	int a,b,c,e,g,i,j,k,l,m,p,q,u,v;
-	int WOW[30];
-	int WAW[20];
-	int WVW[20];
-	for (g=0;g<31;g++)
-    {
-    	WOW[g]=0;
-	}
-		for (g=0;g<21;g++)
+	int WAW[21];
+	int WVW[21];
+	int WATERMAX[21];
+	int WATERSAME[16];
+	for (g=0;g<21;g++)
     {
     	WAW[g]=0;
 	}	
-		for (g=0;g<21;g++)
+	for (g=0;g<21;g++)
     {
     	WVW[g]=0;
 	}	
+	for (g=0;g<21;g++)
+    {
+    	WATERMAX[g]=0;
+    }	
+    for (g=0;g<16;g++)
+    {
+    	WATERSAME[g]=0;
+	}
     int num[7];
 	double r,s,t,x,y,z,d,h,f,w,n,o;
 	f=0;
@@ -134,7 +139,7 @@ int main()
  	    			q=p;
 				}
 			}
-			else
+			else if(num[p]==num[1])
 			{
 				r++;
 			}
@@ -157,6 +162,11 @@ int main()
 					if(r==0)
 					{
 						e++;
+						WATERMAX[num[1]]=WATERMAX[num[1]]+1;
+					}
+					if(r!=0)
+					{
+						WATERSAME[num[1]]=WATERSAME[num[1]]+1;
 					}
 				}
 				else if (q!=1)
@@ -165,7 +175,6 @@ int main()
 					cout << "第"<<s<<"次演算結果:\n水珠+兼具屬珠量有"<<num[1]+num[q]<<"顆，\n倍率可視為3.5*3.5*((" <<num[1]<<"+"<<num[q]<<")/"<<num[1]<<")="<<3.5*3.5*(num[1]+num[q])/num[1]<<"倍，即單邊隊倍率為"<<sqrt(3.5*3.5*(num[1]+num[q])/num[1])<<"倍\n\n\n";
 					t=t+sqrt(3.5*3.5*(num[1]+num[q])/num[1]);
 					y=y+num[1]+num[q];
-					WOW[num[1]+num[q]]=WOW[num[1]+num[q]]+1;
 					WAW[num[1]]=WAW[num[1]]+1;
 					WVW[num[q]]=WVW[num[q]]+1;
 					w=w+num[q];
@@ -177,9 +186,22 @@ int main()
 				l--;
 				if(q!=1)
 				{
+					WAW[num[1]]=WAW[num[1]]+1;
+					WVW[num[q]]=WVW[num[q]]+1;
 					w=w+num[q];
 					o=o+num[1];
 					n++;
+				}
+				if(q==1)
+				{
+					if(r==0)
+					{
+						WATERMAX[num[1]]=WATERMAX[num[1]]+1;
+					}
+					else
+					{
+						WATERSAME[num[1]]=WATERSAME[num[1]]+1;
+					}
 				}
 				cout << "水珠不足三粒，不列入計算。\n\n\n";
 				f++;
@@ -192,21 +214,17 @@ int main()
 			h++;
 		}
 	    Sleep(u);
-  }
-  x=sqrt(t/s);
-  z=s-z;
-  d=y/z;
-  cout << "經" << s << "次演算後，發動兼屬效果的次數有"<<z<<"次\n";
-  cout << "水珠最多且唯一最多的板面出現次數有"<<e<<"次\n";
-  cout << "兼屬效果時，其水珠+兼屬珠量的期望值為" << d<<"粒\n" ;
-	cout << "而其單邊隊長的有效倍率期望值為" << x <<"倍\n\n";
-	cout<<"另外，水珠+兼屬珠總數的統計數據如下:\n6珠:"<<WOW[6]<<" 7珠:"<<WOW[7]<<" 8珠:"<<WOW[8]<<" 9珠:"<<WOW[9]<<" 10珠:"<<WOW[10]<<"\n11珠:"<<WOW[11]<<" 12珠:"<<WOW[12]<<" 13珠:"<<WOW[13]<<" 14珠:"<<WOW[14]<<" 15珠:"<<WOW[15]<<"\n16珠:"<<WOW[16]<<" 17珠:"<<WOW[17]<<" 18珠:"<<WOW[18]<<" 19珠:"<<WOW[19]<<" 20珠:"<<WOW[20]<<"\n21珠:"<<WOW[21]<<" 22珠:"<<WOW[22]<<" 23珠:"<<WOW[23]<<" 24珠:"<<WOW[24]<<" 25珠:"<<WOW[25]<<"\n26珠:"<<WOW[26]<<" 27珠:"<<WOW[27]<<" 28珠:"<<WOW[28]<<" 29珠:"<<WOW[29]<<" 30珠:"<<WOW[30]<<"\n\n";
-	cout<<"當中，水珠量數據如下(兼屬效果時):\n3珠:"<<WAW[3]<<" 4珠:"<<WAW[4]<<" 5珠:"<<WAW[5]<<" 6珠:"<<WAW[6]<<" 7珠:"<<WAW[7]<<" 8珠:"<<WAW[8]<<" 9珠:"<<WAW[9]<<" 10珠:"<<WAW[10]<<"\n11珠:"<<WAW[11]<<" 12珠:"<<WAW[12]<<" 13珠:"<<WAW[13]<<" 14珠:"<<WAW[14]<<" 15珠:"<<WAW[15]<<"\n\n";
-	cout<<"兼屬珠則數據如下(兼屬效果時):\n3珠:"<<WVW[3]<<" 4珠:"<<WVW[4]<<" 5珠:"<<WVW[5]<<" 6珠:"<<WVW[6]<<" 7珠:"<<WVW[7]<<" 8珠:"<<WVW[8]<<" 9珠:"<<WVW[9]<<" 10珠:"<<WVW[10]<<"\n11珠:"<<WVW[11]<<" 12珠:"<<WVW[12]<<" 13珠:"<<WVW[13]<<" 14珠:"<<WVW[14]<<" 15珠:"<<WVW[15]<<"\n\n";
-	cout << "另外，連同水珠不足3粒的情況，發動兼屬效果時，兼屬珠的期望值為" <<w/(z+n)<<"\n";
-  cout << "連同水珠不足3粒的情況，發動兼屬效果時，水珠期望值則:"<<o/(z+n)<<"\n";
-	cout<< "版面有3粒或以上相連機率=" <<h/(s+h+f)<<"\n";
-	cout<< "版面不足3粒水珠機率(去除3粒或以上相連機率)=" << f/(s+f)<< "\n";
-  system("pause"); 
+    }
+    x=sqrt(t/s);
+    z=s-z;
+    d=y/z;
+    cout << "經" << s << "次演算後，發動兼屬效果的次數有"<<z<<"次，\n水珠最多且唯一最多的板面出現次數有"<<e<<"次\n";
+    cout << "兼屬效果時，其水珠+兼屬珠量的期望值為" << d<<"粒，\n而其單邊隊長的有效倍率期望值為" << x <<"倍\n\n";
+	cout<<"當中，水珠量數據如下(兼屬效果時 連同水珠不夠3粒情況):\n0珠:"<<WAW[0]<<" 1珠:"<<WAW[1]<<" 2珠:"<<WAW[2]<<" 3珠:"<<WAW[3]<<" 4珠:"<<WAW[4]<<" 5珠:"<<WAW[5]<<"\n6珠:"<<WAW[6]<<" 7珠:"<<WAW[7]<<" 8珠:"<<WAW[8]<<" 9珠:"<<WAW[9]<<" 10珠:"<<WAW[10]<<"\n11珠:"<<WAW[11]<<" 12珠:"<<WAW[12]<<" 13珠:"<<WAW[13]<<" 14珠:"<<WAW[14]<<" 15珠:"<<WAW[15]<<"\n";
+	cout<<"兼屬珠則數據如下(兼屬效果時 連同水珠不夠3粒情況):\n0珠:"<<WVW[0]<<" 1珠:"<<WVW[1]<<" 2珠:"<<WVW[2]<<" 3珠:"<<WVW[3]<<" 4珠:"<<WVW[4]<<" 5珠:"<<WVW[5]<<"\n6珠:"<<WVW[6]<<" 7珠:"<<WVW[7]<<" 8珠:"<<WVW[8]<<" 9珠:"<<WVW[9]<<" 10珠:"<<WVW[10]<<"\n11珠:"<<WVW[11]<<" 12珠:"<<WVW[12]<<" 13珠:"<<WVW[13]<<" 14珠:"<<WVW[14]<<" 15珠:"<<WVW[15]<<" 16珠:"<<WVW[16]<<" 17珠:"<<WVW[17]<<" 18珠:"<<WVW[18]<<" 19珠:"<<WVW[19]<<" 20珠:"<<WVW[20]<<"\n\n";
+	cout<<"水珠最多時的水珠量數據(連同水珠不夠3粒情況):\n0珠:"<<WATERMAX[0]<<" 1珠:"<<WATERMAX[1]<<" 2珠:"<<WATERMAX[2]<<" 3珠:"<<WATERMAX[3]<<" 4珠:"<<WATERMAX[4]<<" 5珠:"<<WATERMAX[5]<<"\n6珠:"<<WATERMAX[6]<<" 7珠:"<<WATERMAX[7]<<" 8珠:"<<WATERMAX[8]<<" 9珠:"<<WATERMAX[9]<<" 10珠:"<<WATERMAX[10]<<"\n11珠:"<<WATERMAX[11]<<" 12珠:"<<WATERMAX[12]<<" 13珠:"<<WATERMAX[13]<<" 14珠:"<<WATERMAX[14]<<" 15珠:"<<WATERMAX[15]<<" 16珠:"<<WATERMAX[16]<<" 17珠:"<<WATERMAX[17]<<" 18珠:"<<WATERMAX[18]<<" 19珠:"<<WATERMAX[19]<<" 20珠:"<<WATERMAX[20]<<"\n";
+	cout<<"水珠跟某屬同為最大時水珠量數據(連同水珠不夠3粒情況):\n0珠:"<<WATERSAME[0]<<" 1珠:"<<WATERSAME[1]<<" 2珠:"<<WATERSAME[2]<<" 3珠:"<<WATERSAME[3]<<" 4珠:"<<WATERSAME[4]<<" 5珠:"<<WATERSAME[5]<<"\n6珠:"<<WATERSAME[6]<<" 7珠:"<<WATERSAME[7]<<" 8珠:"<<WATERSAME[8]<<" 9珠:"<<WATERSAME[9]<<" 10珠:"<<WATERSAME[10]<<"\n11珠:"<<WATERSAME[11]<<" 12珠:"<<WATERSAME[12]<<" 13珠:"<<WATERSAME[13]<<" 14珠:"<<WATERSAME[14]<<" 15珠:"<<WATERSAME[15]<<"\n";
+	cout<< "版面有3粒或以上相連機率=" <<h/(s+h+f)<<"\n版面不足3粒水珠機率(去除3粒或以上相連機率)=" << f/(s+f)<< "\n";
+    system("pause"); 
 	return 0;
 }
